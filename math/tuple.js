@@ -1,4 +1,4 @@
-import { equal } from "../utils/math";
+import { equal } from "../utils/math.js";
 
 class Tuple {
   constructor(x, y, z, w) {
@@ -102,11 +102,77 @@ export class Vector extends Tuple {
   dot(other) {
     return this.x * other.x + this.y * other.y + this.z * other.z;
   }
+
+  set(id, value) {
+    if (id === 0) this.x = value;
+    else if (id === 1) this.y = value;
+    else if (id === 2) this.z = value;
+    else if (id === 3) this.w = value;
+    else throw new Error("Invalid index");
+  }
+
+  get(id) {
+    if (id === 0) return this.x;
+    else if (id === 1) return this.y;
+    else if (id === 2) return this.z;
+    else if (id === 3) return this.w;
+    else throw new Error("Invalid index");
+  }
+
+  get length() {
+    return 4;
+  }
 }
 
 export class Point extends Tuple {
   constructor(x, y, z) {
     super(x, y, z, 1);
+  }
+
+  get(i) {
+    if (i === 0) return this.x;
+    else if (i === 1) return this.y;
+    else if (i === 2) return this.z;
+    else if (i === 3) return this.w;
+    else throw new Error("Invalid index");
+  }
+
+  set(i, value) {
+    if (i === 0) this.x = value;
+    else if (i === 1) this.y = value;
+    else if (i === 2) this.z = value;
+    else if (i === 3) this.w = value;
+    else throw new Error("Invalid index");
+  }
+
+  get length() {
+    return 4;
+  }
+}
+
+export class Color extends Tuple {
+  constructor(r, g, b) {
+    super(r, g, b, 1);
+  }
+
+  add(other) {
+    return new Color(this.x + other.x, this.y + other.y, this.z + other.z);
+  }
+
+  sub(other) {
+    return new Color(this.x - other.x, this.y - other.y, this.z - other.z);
+  }
+
+  mul(other) {
+    return new Color(this.x * other.x, this.y * other.y, this.z * other.z);
+  }
+
+  scale(value) {
+    return new Color(this.x * value, this.y * value, this.z * value);
+  }
+
+  toString() {
+    return `rgba(${this.x * 255}, ${this.y * 255}, ${this.z * 255}, ${this.w})`;
   }
 }
 
